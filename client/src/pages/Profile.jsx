@@ -33,6 +33,8 @@ export default function Profile() {
       handleFileUpload(image);
     }
   }, [image]);
+
+
   const handleFileUpload = async (image) => {
     const storage = getStorage(app);
     const fileName = new Date().getTime() + image.name;
@@ -55,9 +57,14 @@ export default function Profile() {
       }
     );
   };
+
+
+  
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -68,9 +75,12 @@ export default function Profile() {
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify(formData),
       });
+
       const data = await res.json();
+      console.log(data);
       if (data.success === false) {
         dispatch(updateUserFailure(data));
         return;
