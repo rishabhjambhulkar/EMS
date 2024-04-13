@@ -86,6 +86,50 @@ export const google = async (req, res, next) => {
   }
 };
 
+
 export const signout = (req, res) => {
   res.clearCookie('access_token').status(200).json('Signout success!');
 };
+
+
+
+
+import nodemailer from "nodemailer";
+
+// Your code here
+
+
+export const sendNotMail = async (req,res) => {
+  const {email} = req.body
+  const otp = Math.floor(100000 + Math.random() * 900000);
+  try {
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "jambhulkarrishabh@gmail.com", // Replace with your Gmail email address
+        pass: "hitxyoywsfafizqf", // Replace with your Gmail password (or use an app password)
+      },
+    });
+
+    // Email options
+    const mailOptions = {
+      from: "jambhulkarrishabh@gmail.com", // Replace with your Gmail email address
+      to: email,
+      subject: "subject",
+      html: `<h1> Congratulations you successfully sent email. OTP : ${otp} </h1>`
+
+    };
+
+    // Send email
+    transporter.sendMail(mailOptions, async (error, info) => {
+      if (error) {
+        console.log(error, "Internal Server Error");
+      } else {
+        console.log("Email sent:" + info.response);
+        console.log("Email sent successfully");
+      }
+    });
+  } catch (err) {
+    console.log(err);
+  }
+}

@@ -1,12 +1,105 @@
 import React from 'react';
 // Assuming styles.css is in the same directory as your JSX file
 
-
+import { useState } from 'react';
 
 function Verification() {
-  return (
-    <div>Verification</div>
-  )
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [otp, setOTP] = useState('');
+  const [show, setShow] = useState(false);
+
+  const handleEmailVerification = async (e) => {
+    e.preventDefault();
+    // Code to send OTP to email and verify
+
+    const res = await fetch("api/auth/sendmail", {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+          email
+      })
+  });
+
+  const data = await res.json();
+  console.log(data);
+  
+  if (data.status === 401 || !data) {
+    console.log("error")
+} else {
+
+    setEmail("")
+    console.log("Email sent")
 }
 
-export default Verification
+  };
+
+  // const handlePhoneVerification = async () => {
+  //   // Code to send OTP to phone number and verify
+  //   setVerificationMethod('phone');
+  //   // Send OTP to phone number 'phone'
+  //   try {
+  //     // API call to send OTP to phone
+  //     // Await for response and set verification status based on response
+  //     setVerificationStatus('OTP sent to your phone');
+  //   } catch (error) {
+  //     console.error('Error sending OTP to phone:', error);
+  //     setVerificationStatus('Error sending OTP to phone');
+  //   }
+  // };
+
+  const handleVerifyOTP = async () => {
+    // Code to verify OTP based on verification method (email or phone)
+    try {
+      // API call to verify OTP
+      // Await for response and set verification status based on response
+      setVerificationStatus('OTP verified successfully');
+    } catch (error) {
+      console.error('Error verifying OTP:', error);
+      setVerificationStatus('Error verifying OTP');
+    }
+  };
+
+  return (
+    <div>
+      <h1>Verify Email and Phone via OTP</h1>
+      <div>
+        <input
+          type="email"
+          placeholder="Enter email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <button onClick={handleEmailVerification}>Send OTP to Email</button>
+      </div>
+      {/* <div>
+        <input
+          type="tel"
+          placeholder="Enter phone number"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+        />
+        <button onClick={handlePhoneVerification}>Send OTP to Phone</button>
+      </div> */}
+      <div>
+        <input
+          type="text"
+          placeholder="Enter OTP"
+          value={otp}
+          onChange={(e) => setOTP(e.target.value)}
+        />
+        <button onClick={handleVerifyOTP}>Verify OTP</button>
+      </div>
+      {/* <div>
+        Verification Method: {verificationMethod}
+      </div>
+      <div>
+        Verification Status: {verificationStatus}
+      </div> */}
+    </div>
+  );
+}
+
+export default Verification;
