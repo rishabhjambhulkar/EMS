@@ -15,5 +15,35 @@ export const verifyToken = (req, res, next) => {
         next();
     });
 
+}
+ 
 
+export const signEmailOTpToken = (payload) => {
+    return new Promise((resolve, reject)=>{
+        // const payload={};
+        const secretKey = process.env.JWT_SECRET;
+        const options= {
+            expiresIn: '120s',
+        }
+        jwt.sign(payload, secretKey, options, (err, token)=>{
+            if(err){
+                return reject(err)
+            }
+            return resolve(token)
+        })
+    })
+}
+
+
+export const verifyEmailOtpToken = (token)=>{
+    return new Promise((resolve, reject)=>{
+        jwt.verify(token, process.env.JWT_SECRET, (err, payload)=>{
+            if(err){
+               return reject(err)
+            }
+            const otp = payload.otp;
+            const email = payload.email;
+            resolve({otp: otp, email: email})
+        })
+    })
 }

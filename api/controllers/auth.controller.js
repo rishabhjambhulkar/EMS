@@ -93,9 +93,9 @@ export const signout = (req, res) => {
 
 
 
-
+import { verifyEmailOtpToken, signEmailOTpToken } from '../utils/verifyUser.js';
 import nodemailer from "nodemailer";
-
+import Userverify from '../models/OtpModel.js';
 // Your code here
 
 
@@ -120,16 +120,61 @@ export const sendNotMail = async (req,res) => {
 
     };
 
-    // Send email
+
     transporter.sendMail(mailOptions, async (error, info) => {
       if (error) {
-        console.log(error, "Internal Server Error");
+        res.status(500).send("Internal Server Error");
       } else {
-        console.log("Email sent:" + info.response);
-        console.log("Email sent successfully");
+        const userFind = await Userverify.findOne({ email });
+        const otpToken = await signEmailOTpToken({ otp: otp.toString() });
+        if (userFind) {
+          await Userverify.updateOne(
+            { email },
+            { $set: { verifyToken: otpToken } }
+          );
+        } else {
+          await Userverify.create({ email, verifyToken: otpToken });
+        }
+        res.status(200).send("Email sent successfully");
       }
     });
   } catch (err) {
     console.log(err);
   }
-}
+};
+
+export async function verify_otp(req, res, next)  {
+ 
+  try {
+    const { email } = req.body;
+    console.log(req.body);
+    const EmailToken = await Userverify.findOne({ email: email });
+    if (EmailToken) {
+      const { otp } = await verifyEmailOtpToken(EmailToken.verifyToken);
+      console.log(otp, req.body.otp);
+      if (req.body.otp == otp) {
+        return res.status(200).json({ message: "OTP is Success" });
+      } else {
+        return res.status(404).json({ message: "Entered OTP is wrong" });
+      }
+    } else {
+      return res.status(404).json({ message: "Please request a Otp" });
+    }
+  } catch (err) {
+    return res.status(404).json({ message: err });
+  }
+};
+
+    // Send email
+  //   transporter.sendMail(mailOptions, async (error, info) => {
+  //     if (error) {
+  //       console.log(error, "Internal Server Error");
+  //     } else {
+  //       console.log("Email sent:" + info.response);
+  //       console.log("Email sent successfully");
+  //     }
+  //   });
+  // } catch (err) {
+  //   console.log(err);
+  // }
+// }

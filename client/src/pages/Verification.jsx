@@ -50,17 +50,31 @@ function Verification() {
   //   }
   // };
 
-  const handleVerifyOTP = async () => {
-    // Code to verify OTP based on verification method (email or phone)
+  const handleVerifyOTP = async (e) => {
+    e.preventDefault();
+    console.log("clicked")
     try {
-      // API call to verify OTP
-      // Await for response and set verification status based on response
-      setVerificationStatus('OTP verified successfully');
+      const res = await fetch("api/auth/verifyOtp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email: email,
+          otp: otp,
+        })
+      });
+      if (!res.ok) {
+        throw new Error("Failed to verify OTP");
+      }
+      console.log("OTP verification successful"); // Log successful verification
+      // Handle successful OTP verification here
     } catch (error) {
-      console.error('Error verifying OTP:', error);
-      setVerificationStatus('Error verifying OTP');
+      console.error("Error verifying OTP:", error.message); // Log error
+      // Handle error here
     }
   };
+  
 
   return (
     <div>
