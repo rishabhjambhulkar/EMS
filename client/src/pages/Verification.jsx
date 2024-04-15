@@ -8,7 +8,7 @@ function Verification() {
   const [phone, setPhone] = useState('');
   const [otp, setOTP] = useState('');
   const [show, setShow] = useState(false);
-
+  const [verificationStatus, setVerificationStatus] = useState(null);
   const handleEmailVerification = async (e) => {
     e.preventDefault();
     // Code to send OTP to email and verify
@@ -67,6 +67,7 @@ function Verification() {
       if (!res.ok) {
         throw new Error("Failed to verify OTP");
       }
+      setVerificationStatus("verified");
       console.log("OTP verification successful"); // Log successful verification
       // Handle successful OTP verification here
     } catch (error) {
@@ -106,12 +107,19 @@ function Verification() {
         />
         <button onClick={handleVerifyOTP}>Verify OTP</button>
       </div>
-      {/* <div>
+       {/* <div>
         Verification Method: {verificationMethod}
-      </div>
-      <div>
-        Verification Status: {verificationStatus}
       </div> */}
+      <div>
+        Verification Status: {verificationStatus === "verified" ? (
+          <span className="text-green-500">Verified</span>
+        ) : verificationStatus === "pending" ? (
+          <span className="text-yellow-500">Pending</span>
+        ) : (
+          <span className="text-red-500">Not Verified</span>
+        )}
+      </div>
+
     </div>
   );
 }
