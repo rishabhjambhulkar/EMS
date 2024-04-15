@@ -5,17 +5,37 @@ import userRoutes from './routes/user.route.js';
 import authRoutes from './routes/auth.route.js';
 import cookieParser from 'cookie-parser';
 import path from 'path';
+import bookroutes from './routes/ToDoRoutes.js';
 // dotenv.config();
+// import seatData from "file:///C:/Users/jambh/Desktop/MERN/loginapp/mern-auth/api/seatData.json" assert { type: "json" };
+// import Seat from './models/rsmodel.js';
 
-
+//  DB1
 mongoose
   .connect("mongodb://localhost:27017/mern-auth")
   .then(() => {
-    console.log('Connected to MongoDB');
-  })
+    console.log('Connected to DB1');
+        // JSON data representing seat information
+
+
+    // Create instances of Seat model using the JSON data
+//     Seat.insertMany(seatData)
+//         .then((docs) => {
+//             console.log(`${docs.length} seats added to the database`);
+//             mongoose.disconnect(); // Close the connection after adding data
+//         })
+//         .catch((err) => {
+//             console.error("Error adding seats:", err);
+//             mongoose.disconnect(); // Close the connection in case of error
+//         });
+})
   .catch((err) => {
     console.log(err);
   });
+
+
+
+
 
 // const __dirname = path.resolve();
 
@@ -37,7 +57,7 @@ app.listen(3000, () => {
 
 app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
-
+app.use("/api", bookroutes);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;

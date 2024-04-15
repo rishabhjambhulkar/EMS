@@ -1,0 +1,44 @@
+
+
+[
+    {
+      "seat": 1,
+      "availability": "available"
+    },
+    {
+      "seat": 2,
+      "availability": "available"
+    },
+    {
+      "seat": 3,
+      "availability": "available"
+    },
+    {
+      "seat": 4,
+      "availability": "available"
+    },
+    {
+      "seat": 5,
+      "availability": "available"
+    },
+    {
+      "seat": 6,
+      "availability": "available"
+    },
+    {
+      "seat": 7,
+      "availability": "available"
+    },
+    {
+      "seat": 8,
+      "availability": "available"
+    },
+    {
+      "seat": 9,
+      "availability": "available"
+    },
+    {
+      "seat": 10,
+      "availability": "available"
+    }
+  ]

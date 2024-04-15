@@ -16,6 +16,9 @@ export default function Header() {
           <Link to='/verification'>
             <li>Verify</li>
           </Link>
+          <Link to='/book'>
+            <li>Booking</li>
+          </Link>
           <Link to='/profile'>
             {currentUser ? (
               <img src={currentUser.profilePicture} alt='profile' className='h-7 w-7 rounded-full object-cover' />
