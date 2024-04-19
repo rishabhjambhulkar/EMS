@@ -2,39 +2,36 @@ import React from 'react';
 // Assuming styles.css is in the same directory as your JSX file
 
 import { useState } from 'react';
-
+import axios from 'axios';
 function Verification() {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [otp, setOTP] = useState('');
   const [show, setShow] = useState(false);
   const [verificationStatus, setVerificationStatus] = useState(null);
-  const handleEmailVerification = async (e) => {
-    e.preventDefault();
-    // Code to send OTP to email and verify
 
-    const res = await fetch("api/auth/sendmail", {
-      method: "POST",
+
+
+
+const handleEmailVerification = async (e) => {
+  e.preventDefault();
+  // Code to send OTP to email and verify
+  console.log("Email verification request data:",{email},email);
+  try {
+    const response = await axios.post("/api/auth/sendmail", { email }, {
       headers: {
-          "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-          email
-      })
-  });
+        "Content-Type": "application/json"
+      }
+    });
+    
+    // Handle response data
+    console.log(response.data);
+  } catch (error) {
+    // Handle error
+    console.error('An error occurred:', error);
+  }
+};
 
-  const data = await res.json();
-  console.log(data);
-  
-  if (data.status === 401 || !data) {
-    console.log("error")
-} else {
-
-    setEmail("")
-    console.log("Email sent")
-}
-
-  };
 
   // const handlePhoneVerification = async () => {
   //   // Code to send OTP to phone number and verify
