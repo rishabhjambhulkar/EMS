@@ -7,12 +7,13 @@ import cookieParser from 'cookie-parser';
 import path from 'path';
 import bookroutes from './routes/ToDoRoutes.js';
 // dotenv.config();
-// import seatData from "file:///C:/Users/jambh/Desktop/MERN/loginapp/mern-auth/api/seatData.json" assert { type: "json" };
-// import Seat from './models/rsmodel.js';
+import seatData from "file:///C:/Users/jambh/Desktop/MERN/loginapp/mern-auth/api/seatData.json" assert { type: "json" };
+import Seat from './models/rsmodel.js';
 
 //  DB1
 mongoose
-  .connect("mongodb://localhost:27017/mern-auth")
+  // .connect("mongodb://localhost:27017/mern-auth")
+  .connect("mongodb+srv://rj:rj@cluster0.txxbktr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
   .then(() => {
     console.log('Connected to DB1');
         // JSON data representing seat information
@@ -41,11 +42,11 @@ mongoose
 
 const app = express();
 
-// app.use(express.static(path.join(__dirname, '/client/dist')));
+app.use(express.static(path.join(__dirname, '/client/dist')));
 
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
-// });
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+});
 
 app.use(express.json());
 
