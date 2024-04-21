@@ -1,11 +1,11 @@
 // Define the function to add s
 
-// import seatData from './seatData.json' assert { type: "json" };
-import seatData from "file:///C:/Users/jambh/Desktop/MERN/loginapp/mern-auth/api/seatData.json" assert { type: "json" };
-// import seatData from './seatData.json';
+// // import seatData from './seatData.json' assert { type: "json" };
+// import seatData from "file:///C:/Users/jambh/Desktop/MERN/loginapp/mern-auth/api/seatData.json" assert { type: "json" };
+// // import seatData from './seatData.json';
 
 
-import Seat from './models/rsmodel.js';
+// import Seat from './models/rsmodel.js';
 
 
 function addSeats() {

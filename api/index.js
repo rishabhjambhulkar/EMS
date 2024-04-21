@@ -7,8 +7,6 @@ import cookieParser from 'cookie-parser';
 import path from 'path';
 import bookroutes from './routes/ToDoRoutes.js';
 // dotenv.config();
-import seatData from "file:///C:/Users/jambh/Desktop/MERN/loginapp/mern-auth/api/seatData.json" assert { type: "json" };
-import Seat from './models/rsmodel.js';
 
 //  DB1
 mongoose
