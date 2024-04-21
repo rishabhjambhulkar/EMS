@@ -38,7 +38,7 @@ mongoose
 
 
 
-// const __dirname = path.resolve();
+const __dirname = path.resolve();
 
 const app = express();
 
