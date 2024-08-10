@@ -13,9 +13,23 @@ export default function Header() {
           <Link to='/'>
             <li>Home</li>
           </Link>
+<<<<<<< Updated upstream
           <Link to='/about'>
             <li>About</li>
           </Link>
+=======
+          {currentUser && (
+            <>
+              <Link to='/dashboard'>
+                <li>Dashboard</li>
+              </Link>
+              <Link to='/employee'>
+                <li>Employee Data</li>
+              </Link>
+            </>
+          )}
+        
+>>>>>>> Stashed changes
           <Link to='/profile'>
             {currentUser ? (
               <img src={currentUser.profilePicture} alt='profile' className='h-7 w-7 rounded-full object-cover' />
