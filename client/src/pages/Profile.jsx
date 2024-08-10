@@ -74,6 +74,7 @@ export default function Profile({ setIsAuthenticated }) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          
         },
         credentials: 'include',
         body: JSON.stringify(formData),
@@ -131,18 +132,7 @@ export default function Profile({ setIsAuthenticated }) {
           accept='image/*'
           onChange={(e) => setImage(e.target.files[0])}
         />
-        {/* 
-      firebase storage rules:  
-      allow read;
-      allow write: if
-      request.resource.size < 2 * 1024 * 1024 &&
-      request.resource.contentType.matches('image/.*') */}
-        <img
-          src={formData.profilePicture || currentUser.profilePicture}
-          alt='profile'
-          className='h-24 w-24 self-center cursor-pointer rounded-full object-cover mt-2'
-          onClick={() => fileRef.current.click()}
-        />
+    
         <p className='text-sm self-center'>
           {imageError ? (
             <span className='text-red-700'>

@@ -3,30 +3,20 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import userRoutes from './routes/user.route.js';
 import authRoutes from './routes/auth.route.js';
+import EmployeeRoutes from './routes/EmployeeRoutes.js';
 import cookieParser from 'cookie-parser';
 import path from 'path';
-import bookroutes from './routes/ToDoRoutes.js';
+
 // dotenv.config();
 
 //  DB1
 mongoose
-  // .connect("mongodb://localhost:27017/mern-auth")
-  .connect("mongodb+srv://rj:rj@cluster0.txxbktr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+  .connect("mongodb://127.0.0.1:27017/EMS")
+  // .connect("mongodb+srv://rj:rj@cluster0.txxbktr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
   .then(() => {
     console.log('Connected to DB1');
         // JSON data representing seat information
 
-
-    // Create instances of Seat model using the JSON data
-//     Seat.insertMany(seatData)
-//         .then((docs) => {
-//             console.log(`${docs.length} seats added to the database`);
-//             mongoose.disconnect(); // Close the connection after adding data
-//         })
-//         .catch((err) => {
-//             console.error("Error adding seats:", err);
-//             mongoose.disconnect(); // Close the connection in case of error
-//         });
 })
   .catch((err) => {
     console.log(err);
@@ -56,7 +46,8 @@ app.listen(3000, () => {
 
 app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
-app.use("/api", bookroutes);
+
+app.use('/api/employees', EmployeeRoutes);
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
