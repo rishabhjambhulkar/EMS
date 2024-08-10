@@ -11,14 +11,10 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
-<<<<<<< Updated upstream
-    "firebase": "^10.1.0",
-=======
     "caniuse-lite": "^1.0.30001608",
     "chart.js": "^4.4.3",
     "dotenv": "^16.4.5",
     "firebase": "^10.10.0",
->>>>>>> Stashed changes
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",

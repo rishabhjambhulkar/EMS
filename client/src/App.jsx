@@ -7,8 +7,8 @@ import Header from './components/Header';
 import PrivateRoute from './components/PrivateRoute';
 import { useState } from 'react';
 import Dashboard from './pages/Dashboard/Dashboard';
-import EmployeeManagementApp from './pages/'; // Assuming you have these imports
-import EmployeeDetails from './pages/EmployeeDetails'; // Assuming you have these imports
+import EmployeeManagementApp from './pages/EmployeeList/EmployeeManagementApp'; // Assuming you have these imports
+// import EmployeeDetails from './pages/EmployeeDetails'; // Assuming you have these imports
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -24,7 +24,7 @@ function App() {
         <Route element={<PrivateRoute setIsAuthenticated={setIsAuthenticated} isAuthenticated={isAuthenticated} />}>
           <Route path='/profile' element={<Profile setIsAuthenticated={setIsAuthenticated} />} />
           <Route path='/employee' element={<EmployeeManagementApp />} />
-          <Route path='/employee/:id' element={<EmployeeDetails />} />
+          {/* <Route path='/employee/:id' element={<EmployeeDetails />} /> */}
           <Route path='/dashboard' element={<Dashboard />} />
         </Route>
       </Routes>

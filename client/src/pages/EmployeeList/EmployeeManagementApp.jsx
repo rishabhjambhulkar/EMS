@@ -74,15 +74,20 @@ const EmployeeManagementApp = () => {
     const selectedEmployee = employees.length>0 ? employees.find(emp => emp._id === employeeID) : null;
 
     return (
-        <div className='d-flex flex-column justify-content-center align-items-center w-70 p-3'>
-           {/* Notification Container */}
-           {/* <div id="notification-container" className={notificationContainerStyles}></div> */}
-
+        <div className='d-flex flex-column justify-center items-center w-70 p-3'>
+  
             <div className='w-100 d-flex justify-content-center'>
                 <div className='w-80 border bg-light p-3' style={{ width: '80%' }}>
                     <div className='d-flex justify-content-between mb-3'>
-                        <button className='btn btn-primary'
-                            onClick={() => {setShowModal(true);  setIsUpdateMode(false)}}>Add</button>
+                    <button
+                        className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+                        onClick={() => {
+                            setShowModal(true);
+                            setIsUpdateMode(false);
+                        }}
+                        >
+                        Add
+                        </button>
                        
                     </div>
 
