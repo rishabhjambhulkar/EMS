@@ -13,9 +13,11 @@ export default function Header() {
           <Link to='/'>
             <li>Home</li>
           </Link>
-            <li>Booking</li>
+<<<<<<< Updated upstream
+          <Link to='/about'>
+            <li>About</li>
           </Link>
-          <Link to='/guess'>
+=======
           {currentUser && (
             <>
               <Link to='/dashboard'>
@@ -27,6 +29,7 @@ export default function Header() {
             </>
           )}
         
+>>>>>>> Stashed changes
           <Link to='/profile'>
             
               <li> Sign In</li>
