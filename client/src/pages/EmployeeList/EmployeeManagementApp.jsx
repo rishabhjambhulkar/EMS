@@ -74,7 +74,7 @@ const EmployeeManagementApp = () => {
     const selectedEmployee = employees.length>0 ? employees.find(emp => emp._id === employeeID) : null;
 
     return (
-        <div className='d-flex flex-column justify-center items-center w-70 p-3'>
+        <div className='d-flex flex-column justify-center items-center w-70 p-3 pl-[20%]'>
   
             <div className='w-100 d-flex justify-content-center'>
                 <div className='w-80 border bg-light p-3' style={{ width: '80%' }}>
