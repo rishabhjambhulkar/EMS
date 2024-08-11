@@ -24,7 +24,6 @@ function App() {
         <Route element={<PrivateRoute setIsAuthenticated={setIsAuthenticated} isAuthenticated={isAuthenticated} />}>
           <Route path='/profile' element={<Profile setIsAuthenticated={setIsAuthenticated} />} />
           <Route path='/employee' element={<EmployeeManagementApp />} />
-          {/* <Route path='/employee/:id' element={<EmployeeDetails />} /> */}
           <Route path='/dashboard' element={<Dashboard />} />
         </Route>
       </Routes>
