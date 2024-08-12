@@ -8,7 +8,7 @@ const router = Router();
 router.get('/',verifyToken, getAllEmployees);
 router.get('/:id',verifyToken, getEmployeeById);
 router.delete('/:id',verifyToken, deleteEmployeeById);
-router.put('/:id', cloudinaryFileUploader.single('profileImage'),verifyToken, updateEmployeeById);
-router.post('/', cloudinaryFileUploader.single('profileImage'),verifyToken, createEmployee);
+router.put('/:id',verifyToken, updateEmployeeById);
+router.post('/',verifyToken, createEmployee);
 
 export default router;

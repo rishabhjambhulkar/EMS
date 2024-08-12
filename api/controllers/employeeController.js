@@ -184,7 +184,7 @@ export const updateEmployeeById = async (req, res) => {
             age: existingEmployee.age,
             department: existingEmployee.department,
             status: existingEmployee.status,
-            profileImage: existingEmployee.profileImage,
+            // profileImage: existingEmployee.profileImage,
             changedAt: new Date()
         };
         existingEmployee.historicalData.push(historicalEntry);
@@ -195,7 +195,7 @@ export const updateEmployeeById = async (req, res) => {
         if (age) { existingEmployee.age = age; }
         if (department) { existingEmployee.department = department; }
         if (status) { existingEmployee.status = status; }
-        if (profileImage) { existingEmployee.profileImage = profileImage; }
+        // if (profileImage) { existingEmployee.profileImage = profileImage; }
 
         console.log(existingEmployee)
         // Save the updated employee record
