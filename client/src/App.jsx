@@ -1,30 +1,30 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
-import Verification from './pages/Verification';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Profile from './pages/Profile';
 import Header from './components/Header';
 import PrivateRoute from './components/PrivateRoute';
-import Book from './pages/Book';
 import { useState } from 'react';
-import Guess from './pages/Guess';
+import Dashboard from './pages/Dashboard/Dashboard';
+import EmployeeManagementApp from './pages/EmployeeList/EmployeeManagementApp'; // Assuming you have these imports
+// import EmployeeDetails from './pages/EmployeeDetails'; // Assuming you have these imports
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   console.log(isAuthenticated);
+
   return (
     <BrowserRouter>
       <Header />
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/verification' element={<Verification />} />
-        <Route path='/book' element={<Book />} />
-        <Route path='/guess' element={<Guess />} />
         <Route path='/sign-in' element={<SignIn setIsAuthenticated={setIsAuthenticated} />} />
         <Route path='/sign-up' element={<SignUp />} />
         <Route element={<PrivateRoute setIsAuthenticated={setIsAuthenticated} isAuthenticated={isAuthenticated} />}>
           <Route path='/profile' element={<Profile setIsAuthenticated={setIsAuthenticated} />} />
+          <Route path='/employee' element={<EmployeeManagementApp />} />
+          <Route path='/dashboard' element={<Dashboard />} />
         </Route>
       </Routes>
     </BrowserRouter>
