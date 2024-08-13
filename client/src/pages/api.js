@@ -72,6 +72,8 @@ export const CreateEmployee = async (empObj) => {
     for (const key in empObj) {
         formData.append(key, empObj[key]);
     }
+
+    console.log(formData);
     // FormData handles the headers and content type
     const options = {
         method: 'POST',

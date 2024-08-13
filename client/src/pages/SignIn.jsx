@@ -20,6 +20,7 @@ export default function SignIn({ setIsAuthenticated }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(formData)
     try {
       dispatch(signInStart());
       const res = await fetch('/api/auth/signin', {
