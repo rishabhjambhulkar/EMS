@@ -23,11 +23,15 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://ems-server-git-main-rishabh-jambhulkars-projects.vercel.app/',
-        changeOrigin: true,
+        target: 'https://ems-server-git-main-rishabh-jambhulkars-projects.vercel.app',
+        // changeOrigin: true,
         secure: false,
       },
     },
   },
   plugins: [react()],
 });
+
+
+
+
