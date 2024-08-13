@@ -23,7 +23,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://ems-cbf9rakmc-rishabh-jambhulkars-projects.vercel.app',
+        target: 'https://ems-server-dusky.vercel.app/',
         changeOrigin: true,
         secure: false,
       },
