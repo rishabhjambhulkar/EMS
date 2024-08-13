@@ -2,6 +2,8 @@ import EmployeeModel from '../models/EmployeeModel.js';
 
 export const createEmployee = async (req, res) => {
     try {
+        // console.log(req)
+        console.log('req.body', req.body)
         const body = req.body;
         console.log(body);
         const profileImage = req?.file ? req?.file?.path : null;

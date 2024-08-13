@@ -34,7 +34,7 @@ export const GetEmployeeDetailsById = async (id) => {
     try {
         const result = await fetch(url, options);
         const { data } = await result.json();
-        console.log(data);
+        console.log('data in api.js', data);
         return data;
     } catch (err) {
         return err;
@@ -65,19 +65,15 @@ export const DeleteEmployeeById = async (id) => {
 export const CreateEmployee = async (empObj) => {
     const url = `/api/employees`;
     console.log('url ', url);
-    // Create a FormData object
-    const formData = new FormData();
 
-    // Append all fields to the FormData object
-    for (const key in empObj) {
-        formData.append(key, empObj[key]);
-    }
-
-    console.log(formData);
+    console.log('empobj', empObj);
     // FormData handles the headers and content type
     const options = {
         method: 'POST',
-        body: formData,
+        headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(empObj),
         credentials: 'include'
     };
     try {

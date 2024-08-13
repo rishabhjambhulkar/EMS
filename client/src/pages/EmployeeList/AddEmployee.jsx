@@ -239,6 +239,7 @@ function AddEmployee({ showModal, setShowModal, employeeID, isUpdateMode }) {
 
     const handleAddEmployee = async (e) => {
         e.preventDefault();
+        console.log('Add employee', employee)
         try {
             const { success, message } = isUpdateMode
                 ? await UpdateEmployeeById(employee, employeeID)
