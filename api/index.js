@@ -54,6 +54,8 @@ app.listen(3000, () => {
   console.log('Server listening on port 3000');
 });
 
+app.use('/', (req, res) => res.json({message: 'server running'}));
+
 app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use("/api", bookroutes);
