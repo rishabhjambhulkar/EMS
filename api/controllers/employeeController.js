@@ -76,6 +76,7 @@ export const createEmployee = async (req, res) => {
 export const getAllEmployees = async (req, res) => {
     try {
         const emps = await EmployeeModel.find().sort({ updatedAt: -1 });
+        console.log('emps', emps);
 
         res.status(200).json({
             message: 'All Employees',
