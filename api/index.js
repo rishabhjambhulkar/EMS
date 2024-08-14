@@ -28,24 +28,14 @@ mongoose
 const app = express();
 
 
-const allowedOrigins = [
-   // Existing production frontend
-  'https://ems-client-flame.vercel.app',  // Another production frontend
-  'http://localhost:5173',  // Vite development server
-  'http://127.0.0.1:5173'  // Alternate localhost address for Vite
-];
-
-app.use(cors({
-  origin: function (origin, callback) {
-    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-      callback(null, origin);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],  // Specify allowed methods
+const corsOptions = {
+  origin: 'https://ems-client-flame.vercel.app', // Only this origin is allowed
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed methods
   credentials: true  // Allow credentials (e.g., cookies) to be sent with requests
-}));
+};
+
+// Apply CORS middleware with the specified options
+app.use(cors(corsOptions));
 
 // const __dirname = path.resolve();
 
