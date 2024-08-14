@@ -5,10 +5,10 @@ import { verifyToken } from '../utils/verifyUser.js';
 
 const router = Router();
 
-router.get('/',verifyToken, getAllEmployees);
-router.get('/:id',verifyToken, getEmployeeById);
-router.delete('/:id',verifyToken, deleteEmployeeById);
-router.put('/:id',verifyToken, updateEmployeeById);
-router.post('/',verifyToken, createEmployee);
+router.get('/', getAllEmployees);
+router.get('/:id', getEmployeeById);
+router.delete('/:id', deleteEmployeeById);
+router.put('/:id', updateEmployeeById);
+router.post('/', createEmployee);
 
 export default router;
