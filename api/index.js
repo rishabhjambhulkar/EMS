@@ -27,7 +27,6 @@ mongoose
 
 const app = express();
 
-app.use(cors());
 
 const allowedOrigins = [
    // Existing production frontend
@@ -47,6 +46,7 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE'],  // Specify allowed methods
   credentials: true  // Allow credentials (e.g., cookies) to be sent with requests
 }));
+
 // const __dirname = path.resolve();
 
 
