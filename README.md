@@ -1,4 +1,6 @@
-## Feature Requirements
+Deployed on Vercel : https://ems-client-flame.vercel.app/
+
+## Features
 
 - **Grid View**: 
   Display all employee records in a responsive and intuitive grid layout.
