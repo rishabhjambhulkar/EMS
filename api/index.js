@@ -29,13 +29,24 @@ const app = express();
 
 app.use(cors());
 
-// Alternatively, configure CORS for specific origins
-app.use(cors({
-    origin: 'https://mern-auth-9q4cl1ehu-rishabh-jambhulkars-projects.vercel.app/', // Specify the allowed origin
-    methods: ['GET', 'POST','PUT', 'DELETE'], // Specify allowed methods
-    credentials: true, // Allow credentials (e.g., cookies) to be sent with requests
-}));
+const allowedOrigins = [
+   // Existing production frontend
+  'https://ems-client-flame.vercel.app',  // Another production frontend
+  'http://localhost:5173',  // Vite development server
+  'http://127.0.0.1:5173'  // Alternate localhost address for Vite
+];
 
+app.use(cors({
+  origin: function (origin, callback) {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],  // Specify allowed methods
+  credentials: true  // Allow credentials (e.g., cookies) to be sent with requests
+}));
 // const __dirname = path.resolve();
 
 
