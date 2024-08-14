@@ -17,6 +17,7 @@ import {
   deleteUserFailure,
   signOut,
 } from '../redux/user/userSlice';
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export default function Profile({ setIsAuthenticated }) {
   const dispatch = useDispatch();
@@ -70,7 +71,7 @@ export default function Profile({ setIsAuthenticated }) {
     e.preventDefault();
     try {
       dispatch(updateUserStart());
-      const res = await fetch(`/api/user/update/${currentUser._id}`, {
+      const res = await fetch(`${BASE_URL}/api/user/update/${currentUser._id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -96,7 +97,7 @@ export default function Profile({ setIsAuthenticated }) {
   const handleDeleteAccount = async () => {
     try {
       dispatch(deleteUserStart());
-      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+      const res = await fetch(`${BASE_URL}/api/user/delete/${currentUser._id}`, {
         method: 'DELETE',
       });
       const data = await res.json();
@@ -112,7 +113,7 @@ export default function Profile({ setIsAuthenticated }) {
 
   const handleSignOut = async (setIsAuthenticated) => {
     try {
-      await fetch('/api/auth/signout');
+      await fetch(`${BASE_URL}/api/auth/signout`);
       dispatch(signOut());
       setIsAuthenticated(false); // Update authentication state
       console.log(setIsAuthenticated)

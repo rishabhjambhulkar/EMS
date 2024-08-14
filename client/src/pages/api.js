@@ -1,7 +1,8 @@
-const BASE_URL = 'http://localhost:3000';
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const GetAllEmployees = async () => {
-    const url = `/api/employees`; // Simple URL without search, page, or limit parameters
+    console.log(BASE_URL)
+    const url = `${BASE_URL}/api/employees`; // Simple URL without search, page, or limit parameters
     const options = {
         method: 'GET',
         headers: {
@@ -43,7 +44,7 @@ export const GetEmployeeDetailsById = async (id) => {
 
 export const DeleteEmployeeById = async (id) => {
     const url =
-        `/api/employees/${id}`;
+        `${BASE_URL}/api/employees/${id}`;
     const options = {
         method: 'DELETE',
         headers: {
@@ -63,7 +64,7 @@ export const DeleteEmployeeById = async (id) => {
 
 
 export const CreateEmployee = async (empObj) => {
-    const url = `/api/employees`;
+    const url = `${BASE_URL}/api/employees`;
     console.log('url ', url);
 
     console.log('empobj', empObj);
@@ -86,7 +87,7 @@ export const CreateEmployee = async (empObj) => {
 };
 
 export const UpdateEmployeeById = async (empObj, id) => {
-    const url = `/api/employees/${id}`;
+    const url = `${BASE_URL}/api/employees/${id}`;
     const options = {
         method: 'PUT',
         headers: {

@@ -6,6 +6,7 @@ import authRoutes from './routes/auth.route.js';
 import EmployeeRoutes from './routes/EmployeeRoutes.js';
 import cookieParser from 'cookie-parser';
 import path from 'path';
+import cors from 'cors';
 
 dotenv.config();
 
@@ -26,6 +27,14 @@ mongoose
 
 const app = express();
 
+app.use(cors());
+
+// Alternatively, configure CORS for specific origins
+app.use(cors({
+    origin: 'https://mern-auth-9q4cl1ehu-rishabh-jambhulkars-projects.vercel.app/', // Specify the allowed origin
+    methods: ['GET', 'POST','PUT', 'DELETE'], // Specify allowed methods
+    credentials: true, // Allow credentials (e.g., cookies) to be sent with requests
+}));
 
 // const __dirname = path.resolve();
 

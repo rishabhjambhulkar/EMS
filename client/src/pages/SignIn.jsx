@@ -7,6 +7,7 @@ import {
 } from '../redux/user/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import OAuth from '../components/OAuth';
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export default function SignIn({ setIsAuthenticated }) {
   const [formData, setFormData] = useState({});
@@ -23,7 +24,7 @@ export default function SignIn({ setIsAuthenticated }) {
     console.log(formData)
     try {
       dispatch(signInStart());
-      const res = await fetch('/api/auth/signin', {
+      const res = await fetch(`${BASE_URL}/api/auth/signin`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
