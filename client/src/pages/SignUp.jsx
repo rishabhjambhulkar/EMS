@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import OAuth from '../components/OAuth';
+import React from 'react'; 
+import axios from 'axios';
+import PasswordInput from '../components/password';
 
 export default function SignUp({ setIsAuthenticated }) {
   const [formData, setFormData] = useState({});
@@ -21,28 +24,32 @@ export default function SignUp({ setIsAuthenticated }) {
     try {
       setLoading(true);
       setError(false);
-      const res = await fetch('/api/auth/signup', {
-        method: 'POST',
+  
+      const res = await axios.post('http://localhost:4000/api/auth/signup', formData, {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
       });
-      const data = await res.json();
+  
+      const data = res.data;
       console.log(data);
       setLoading(false);
+  
       if (data.success === false) {
         setError(true);
         return;
       }
+  
       setIsAuthenticated(true);
       console.log(isAuthenticated);
       navigate('/sign-in');
     } catch (error) {
       setLoading(false);
       setError(true);
+      console.error('Error:', error.response ? error.response.data : error.message);
     }
   };
+  
 
   
   return (
@@ -63,11 +70,15 @@ export default function SignUp({ setIsAuthenticated }) {
           className='bg-slate-100 p-3 rounded-lg'
           onChange={handleChange}
         />
-        <input
+        {/* <input
           type='password'
           placeholder='Password'
           id='password'
           className='bg-slate-100 p-3 rounded-lg'
+          onChange={handleChange}
+        /> */}
+        <PasswordInput
+          value={formData.password || ''}
           onChange={handleChange}
         />
         <button
@@ -76,7 +87,9 @@ export default function SignUp({ setIsAuthenticated }) {
         >
           {loading ? 'Loading...' : 'Sign Up'}
         </button>
-        <OAuth />
+        {/* <OAuth /> */}
+
+       
       </form>
       <div className='flex gap-2 mt-5'>
         <p>Have an account?</p>

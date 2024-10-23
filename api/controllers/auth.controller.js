@@ -12,6 +12,7 @@ console.log(jwtSecretKey, "jwt secret key");
 
 
 export const signup = async (req, res, next) => {
+  console.log(req.body)
   const { username, email, password } = req.body;
   console.log(username, email, password)
   const hashedPassword = bcryptjs.hashSync(password, 10);
@@ -29,24 +30,105 @@ export const signup = async (req, res, next) => {
   }
 };
 
+
+
+
+
+
+
+
+// export const signin = async (req, res, next) => {
+//   const { email, password } = req.body;
+//   try {
+//     const validUser = await User.findOne({ email });
+//     if (!validUser) return next(errorHandler(404, 'User not found'));
+//     const validPassword = bcryptjs.compareSync(password, validUser.password);
+//     if (!validPassword) return next(errorHandler(401, 'wrong credentials'));
+//     const token = jwt.sign({ id: validUser._id }, jwtSecretKey);
+//     const { password: hashedPassword, ...rest } = validUser._doc;
+//     const expiryDate = new Date(Date.now() + 3600000); // 1 hour
+//     res
+//       .cookie('access_token', token, { httpOnly: true, expires: expiryDate })
+//       .status(200)
+//       .json(rest);
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+
+
+// Secret keys
+
+const refreshSecretKey = process.env.REFRESH_SECRET_KEY;
+const accessTokenExpiry = '1m'; // 15 minutes for access token
+const refreshTokenExpiry = '7d'; // 7 days for refresh token
+// console.log('refresh', refreshSecretKey)
+// Store refresh tokens (use database or Redis for production)
+let refreshTokens = [];
+
+// Signin Controller
 export const signin = async (req, res, next) => {
   const { email, password } = req.body;
+  console.log('signin', email, password);
+  
   try {
     const validUser = await User.findOne({ email });
     if (!validUser) return next(errorHandler(404, 'User not found'));
+
     const validPassword = bcryptjs.compareSync(password, validUser.password);
-    if (!validPassword) return next(errorHandler(401, 'wrong credentials'));
-    const token = jwt.sign({ id: validUser._id }, jwtSecretKey);
+    if (!validPassword) return next(errorHandler(401, 'Wrong credentials'));
+
+    // Generate Access Token
+    const accessToken = jwt.sign({ id: validUser._id }, jwtSecretKey, {
+      expiresIn: accessTokenExpiry,
+    });
+
+    // Generate Refresh Token
+    const refreshToken = jwt.sign({ id: validUser._id }, refreshSecretKey, {
+      expiresIn: refreshTokenExpiry,
+    });
+
+    // Store the refresh token in the database or memory
+    refreshTokens.push(refreshToken);
+
     const { password: hashedPassword, ...rest } = validUser._doc;
-    const expiryDate = new Date(Date.now() + 3600000); // 1 hour
-    res
-      .cookie('access_token', token, { httpOnly: true, expires: expiryDate })
-      .status(200)
-      .json(rest);
+
+    // Send both tokens in JSON response
+    res.status(200).json({
+      user: validUser,
+      accessToken,
+      refreshToken,
+    });
   } catch (error) {
     next(error);
   }
 };
+
+
+export const refreshToken = (req, res, next) => {
+  console.log('refresh token', req.body);
+  
+  const {refreshToken} = req.body
+  if (!refreshToken ) {
+    return next(errorHandler(403, 'Refresh token is not valid'));
+  }
+
+  jwt.verify(refreshToken, refreshSecretKey, (err, user) => {
+    if (err) return next(errorHandler(403, 'Invalid refresh token'));
+
+    const newAccessToken = jwt.sign({ id: user.id }, jwtSecretKey, {
+      expiresIn: accessTokenExpiry,
+    });
+   
+    console.log('new access token', newAccessToken)
+    // Send the new access token in JSON response
+    res.status(200).json({ accessToken: newAccessToken });
+  });
+};
+
+
+
+
 
 export const google = async (req, res, next) => {
   try {

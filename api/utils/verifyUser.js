@@ -2,20 +2,29 @@ import jwt from 'jsonwebtoken';
 import { errorHandler } from './error.js';
 
 export const verifyToken = (req, res, next) => {
-    const token = req.cookies.access_token;
-    console.log('Request cookies:', req.cookies);
-    console.log(token)
+    // Extract the token from the Authorization header
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1]; // Get the token part after "Bearer"
 
-    if (!token) return next(errorHandler(401, 'You are not authenticated!'));
+    console.log('Request Authorization Header:', authHeader);
+    console.log('Access Token:', token);
 
+    // Check if the token exists
+    if (!token) {
+        return next(errorHandler(401, 'You are not authenticated!'));
+    }
+
+    // Verify the token
     jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-        if (err) return next(errorHandler(403, 'Token is not valid!'));
+        if (err) {
+            return next(errorHandler(403, 'Token is not valid!'));
+        }
 
+        // If the token is valid, attach the user to the request object
         req.user = user;
         next();
     });
-
-}
+};
  
 
 export const signEmailOTpToken = (payload) => {

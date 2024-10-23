@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+import React from 'react'; 
 import { useRef, useState, useEffect } from 'react';
 import {
   getDownloadURL,
@@ -17,6 +18,8 @@ import {
   deleteUserFailure,
   signOut,
 } from '../redux/user/userSlice';
+import axiosInstance from './axiosInstance.js'
+
 
 export default function Profile({ setIsAuthenticated }) {
   const dispatch = useDispatch();
@@ -34,6 +37,7 @@ export default function Profile({ setIsAuthenticated }) {
     }
   }, [image]);
 
+  console.log(currentUser._id)
 
   const handleFileUpload = async (image) => {
     const storage = getStorage(app);
@@ -66,60 +70,119 @@ export default function Profile({ setIsAuthenticated }) {
 
 
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     dispatch(updateUserStart());
+  //     const res = await fetch(`/api/user/update/${currentUser._id}`, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       credentials: 'include',
+  //       body: JSON.stringify(formData),
+  //     });
+
+  //     const data = await res.json();
+  //     console.log(data);
+  //     if (data.success === false) {
+  //       dispatch(updateUserFailure(data));
+  //       return;
+  //     }
+  //     dispatch(updateUserSuccess(data));
+  //     setUpdateSuccess(true);
+  //   } catch (error) {
+  //     dispatch(updateUserFailure(error));
+  //   }
+  // };
+
+  // const handleDeleteAccount = async () => {
+  //   try {
+  //     dispatch(deleteUserStart());
+  //     const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+  //       method: 'DELETE',
+  //     });
+  //     const data = await res.json();
+  //     if (data.success === false) {
+  //       dispatch(deleteUserFailure(data));
+  //       return;
+  //     }
+  //     dispatch(deleteUserSuccess(data));
+  //   } catch (error) {
+  //     dispatch(deleteUserFailure(error));
+  //   }
+  // };
+
+  // const handleSignOut = async (setIsAuthenticated) => {
+  //   try {
+  //     await fetch('/api/auth/signout');
+  //     dispatch(signOut());
+  //     setIsAuthenticated(false); // Update authentication state
+  //     console.log(setIsAuthenticated)
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  
+  // };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       dispatch(updateUserStart());
-      const res = await fetch(`/api/user/update/${currentUser._id}`, {
-        method: 'POST',
+      
+      // Use axiosInstance to make the request
+      const res = await axiosInstance.post(`/user/update/${currentUser._id}`, formData, {
         headers: {
           'Content-Type': 'application/json',
         },
-        credentials: 'include',
-        body: JSON.stringify(formData),
       });
-
-      const data = await res.json();
+  
+      const data = res.data; // Axios automatically parses the JSON response
       console.log(data);
       if (data.success === false) {
         dispatch(updateUserFailure(data));
         return;
       }
+      
       dispatch(updateUserSuccess(data));
       setUpdateSuccess(true);
     } catch (error) {
-      dispatch(updateUserFailure(error));
+      dispatch(updateUserFailure(error.response ? error.response.data : error));
     }
   };
-
+  
   const handleDeleteAccount = async () => {
     try {
       dispatch(deleteUserStart());
-      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
-        method: 'DELETE',
-      });
-      const data = await res.json();
+      
+      // Use axiosInstance for deletion
+      const res = await axiosInstance.delete(`/user/delete/${currentUser._id}`);
+      
+      const data = res.data; // Axios handles the response parsing
       if (data.success === false) {
         dispatch(deleteUserFailure(data));
         return;
       }
+      
       dispatch(deleteUserSuccess(data));
     } catch (error) {
-      dispatch(deleteUserFailure(error));
+      dispatch(deleteUserFailure(error.response ? error.response.data : error));
+    }
+  };
+  
+  const handleSignOut = async (setIsAuthenticated) => {
+    try {
+      await axiosInstance.post('/auth/signout'); // Use axiosInstance for sign-out
+      dispatch(signOut());
+      setIsAuthenticated(false); // Update authentication state
+      console.log('User signed out');
+    } catch (error) {
+      console.log(error.response ? error.response.data : error);
     }
   };
 
-  const handleSignOut = async (setIsAuthenticated) => {
-    try {
-      await fetch('/api/auth/signout');
-      dispatch(signOut());
-      setIsAuthenticated(false); // Update authentication state
-      console.log(setIsAuthenticated)
-    } catch (error) {
-      console.log(error);
-    }
-  
-  };
+
   return (
     <div className='p-3 max-w-lg mx-auto'>
       <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>

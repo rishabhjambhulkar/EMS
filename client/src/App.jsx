@@ -6,9 +6,10 @@ import SignUp from './pages/SignUp';
 import Profile from './pages/Profile';
 import Header from './components/Header';
 import PrivateRoute from './components/PrivateRoute';
-import Book from './pages/Book';
+
 import { useState } from 'react';
-import Guess from './pages/Guess';
+
+import React from 'react';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -19,8 +20,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/verification' element={<Verification />} />
-        <Route path='/book' element={<Book />} />
-        <Route path='/guess' element={<Guess />} />
+    
         <Route path='/sign-in' element={<SignIn setIsAuthenticated={setIsAuthenticated} />} />
         <Route path='/sign-up' element={<SignUp />} />
         <Route element={<PrivateRoute setIsAuthenticated={setIsAuthenticated} isAuthenticated={isAuthenticated} />}>

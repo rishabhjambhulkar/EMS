@@ -6,60 +6,45 @@ import authRoutes from './routes/auth.route.js';
 import cookieParser from 'cookie-parser';
 import path from 'path';
 import bookroutes from './routes/ToDoRoutes.js';
+import cors from 'cors';  // Importing cors
+
 // dotenv.config();
 
-//  DB1
+// DB connection
 mongoose
-  // .connect("mongodb://localhost:27017/mern-auth")
-  .connect("mongodb+srv://rj:rj@cluster0.txxbktr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+  .connect('mongodb://127.0.0.1:27017/connectverse')
   .then(() => {
     console.log('Connected to DB1');
-        // JSON data representing seat information
-
-
-    // Create instances of Seat model using the JSON data
-//     Seat.insertMany(seatData)
-//         .then((docs) => {
-//             console.log(`${docs.length} seats added to the database`);
-//             mongoose.disconnect(); // Close the connection after adding data
-//         })
-//         .catch((err) => {
-//             console.error("Error adding seats:", err);
-//             mongoose.disconnect(); // Close the connection in case of error
-//         });
-})
+  })
   .catch((err) => {
     console.log(err);
   });
 
-
-
-
-
-// const __dirname = path.resolve();
-
 const app = express();
 
-// app.use(express.static(path.join(__dirname, '/client/dist')));
-
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
-// });
+// Allow CORS for Vite frontend
+const allowedOrigins = ['http://localhost:5173'];  // Vite frontend origin
+app.use(cors({
+  origin: allowedOrigins, // Specify the allowed origin
+  credentials: true // Enable credentials if using cookies or auth headers
+}));
 
 app.use(express.json());
-
 app.use(cookieParser());
 
-app.listen(3000, () => {
-  console.log('Server listening on port 3000');
+app.listen(4000, () => {
+  console.log('Server listening on port 4000');
 });
 
-app.use('/', (req, res) => res.json({message: 'server running'}));
-
+// Routes
 app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
-app.use("/api", bookroutes);
+app.use('/api', bookroutes);
 
+// Default route
+app.use('/', (req, res) => res.json({ message: 'server running' }));
+
+// Error handling middleware
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
   const message = err.message || 'Internal Server Error';
